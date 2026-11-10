@@ -1,0 +1,52 @@
+---
+// «Presupuesto» en la banda de tinta verde (color primario): a la izquierda, el titular como frase grande en Vollkorn,
+// la entrada y los botones (píldora hoja pálida + píldora de filete); a la derecha, los `items` como pasos numerados
+// con cifras de estilo antiguo. Sin `cta`, el botón va al WhatsApp o al teléfono de contacto; `nota` en letra menuda.
+import { seccion, site, tel, whatsapp, fuera } from '../../data/site';
+import { enlace } from '../../lib/multipagina';
+import Banda from '../ui/Banda.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const c = site.contacto;
+const principal = s?.cta?.url
+  ? s.cta
+  : c.whatsapp
+    ? { texto: 'Pedir visita por WhatsApp', url: whatsapp(c.whatsapp, `Hola, quiero pedir presupuesto a ${site.nombre}`) }
+    : c.telefono
+      ? { texto: `Llamar al ${c.telefono}`, url: tel(c.telefono) }
+      : { texto: 'Escríbenos', url: enlace('/#contacto') };
+const secundario = s?.cta_secundario?.url
+  ? s.cta_secundario
+  : c.telefono && !principal.url.startsWith('tel:')
+    ? { texto: `Llamar al ${c.telefono}`, url: tel(c.telefono) }
+    : null;
+---
+
+{
+  s && (s.titulo || s.texto || s.items.length > 0) && (
+    <Banda id={Astro.props.id} color="tinta">
+      <div class="presupuesto">
+        <div>
+          {s.antetitulo && <p class="antetitulo">{s.antetitulo}</p>}
+          {s.titulo && <h2 class="frase">{s.titulo}</h2>}
+          {s.texto && <p class="entrada">{s.texto}</p>}
+          <div class="botones">
+            <a class="btn" href={principal.url} {...fuera(principal.url)}>{principal.texto}</a>
+            {secundario && <a class="btn-sec" href={secundario.url} {...fuera(secundario.url)}>{secundario.texto}</a>}
+          </div>
+          {s.nota && <p class="nota menuda">{s.nota}</p>}
+        </div>
+        {s.items.length > 0 && (
+          <ol class="pasos" aria-label="Cómo pedir presupuesto">
+            {s.items.map((it) => (
+              <li>
+                <p class="pasos-titulo">{it.titulo}</p>
+                {it.texto && <p class="pasos-texto">{it.texto}</p>}
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+    </Banda>
+  )
+}

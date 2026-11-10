@@ -1,0 +1,244 @@
+# Contenido de la web. Es lo único que rellena la plataforma NoExpertise.
+# Las secciones se muestran en el orden de este fichero. Para ocultar una: activa: false.
+# Apartado nuevo: un id propio (es su ancla, /#id) con `tipo:` = el diseño de otra sección o `texto`.
+# Listas siempre planas (nunca una lista dentro de un elemento de lista). Precios siempre entre comillas.
+nombre: Guadalope Jardín y Vivero
+eslogan: Jardinería, riego y vivero en Alcañiz y el Bajo Aragón.
+sector: jardineria
+logo: ""          # ruta a una imagen en public/ (p. ej. /logo.svg). Vacío = nombre en texto.
+colores:
+  primario: "#13331b"   # tinta verde de las bandas y del pie
+  acento: "#1f6a19"     # verde hoja: botones, foco y barras del calendario
+  fondo: "#f7f1df"      # papel de avena
+  texto: "#0f2a18"      # tinta verde casi negra
+contacto:
+  telefono: "978 000 000"
+  email: hola@guadalopejardin.es
+  direccion: Camino de la Estación 14, 44600 Alcañiz (Teruel)
+  horario: "Vivero: de lunes a viernes, de 9:00 a 13:30 y de 16:00 a 19:30. Sábados, de 9:00 a 13:30."
+  whatsapp: "+34 600 000 000"
+redes:
+  instagram: https://www.instagram.com/
+  facebook: https://www.facebook.com/
+  linkedin: ""
+menu:
+  - { texto: Servicios, url: "/#servicios" }
+  - { texto: Jardines, url: "/#trabajos" }
+  - { texto: Vivero, url: "/#vivero" }
+  - { texto: El año, url: "/#calendario" }
+  - { texto: Zonas, url: "/#zonas" }
+  - { texto: Contacto, url: "/#contacto" }
+boton_cabecera: { texto: Pide presupuesto, url: "/#presupuesto" }
+seo:
+  titulo: Guadalope Jardín y Vivero · Jardinería en Alcañiz
+  descripcion: "Diseño y mantenimiento de jardines, podas, césped, riego automático y vivero en Alcañiz y el Bajo Aragón. Visita y presupuesto sin compromiso."
+  tipo: HomeAndConstructionBusiness   # tipo de schema.org (HomeAndConstructionBusiness, GardenStore, LocalBusiness…)
+marca_pie: true   # «Web creada con NoExpertise» en el pie (plan gratis)
+
+secciones:
+  hero:
+    activa: true
+    antetitulo: Jardinería y vivero en Alcañiz
+    titulo: Jardines que aguantan el verano
+    texto: "Diseñamos y cuidamos jardines en Alcañiz. En el vivero, la planta de temporada."
+    imagen: /fotos/hero.jpg
+    pie_foto: Jardín de una casa de piedra en Valdealgorfa, plantado en primavera.
+    cta: { texto: Pide presupuesto, url: "/#presupuesto" }
+    cta_secundario: { texto: Ver jardines hechos, url: "/#trabajos" }
+    items:   # datos cortos bajo los botones (solo `titulo`)
+      - { titulo: Visita y presupuesto sin compromiso }
+      - { titulo: Riego que ahorra agua }
+      - { titulo: Vivero propio }
+
+  servicios:
+    activa: true
+    antetitulo: Servicios
+    titulo: Del proyecto al mantenimiento
+    texto: "Un solo equipo para todo el jardín: particulares, comunidades de vecinos y empresas."
+    items:   # con `detalle`, cada servicio tiene su página en /servicios/<slug>/
+      - titulo: Diseño y construcción de jardines
+        texto: "Te dibujamos el jardín, preparamos la tierra, plantamos y dejamos el riego hecho."
+        precio: "Presupuesto cerrado"
+        imagen: /fotos/servicio-diseno.jpg
+        imagenes: "/fotos/trabajo-jardin-seco.jpg; /fotos/trabajo-huerto.jpg"
+        detalle: |
+          Un jardín empieza por mirar lo que ya hay: cuánto sol le da, qué tierra tiene, por dónde se pasa y cuánta agua se puede gastar. Por eso lo primero es una visita, sin compromiso, en la que medimos y te preguntamos cómo quieres usarlo: para los niños, para sentarte a la sombra, para que se vea bonito desde la ventana o para que dé el menor trabajo posible.
+
+          Con eso te preparamos un dibujo sencillo con las zonas, las plantas y el riego, y un presupuesto cerrado. Elegimos plantas que aguantan el clima del Bajo Aragón, con veranos secos y heladas en invierno, y muchas salen de nuestro propio vivero.
+
+          Después hacemos la obra de principio a fin: limpieza del terreno, aporte de tierra vegetal, caminos de grava o losa, bordes, plantación y riego por goteo con programador. Al terminar te explicamos cómo cuidarlo y, si quieres, nos quedamos con el mantenimiento.
+      - titulo: Mantenimiento de jardines
+        texto: "Siega, poda de setos, abonado y revisión del riego, cada semana o cada quince días."
+        precio: "desde 60 € al mes"
+      - titulo: Podas y talas
+        texto: "Frutales, olivos, setos y árboles grandes, con la herramienta y en la época que tocan."
+        precio: "desde 35 €/hora"
+        imagen: /fotos/servicio-poda.jpg
+        imagenes: "/fotos/olivo-podado.jpg"
+        detalle: |
+          Una buena poda no se nota por lo que se corta, sino por cómo crece el árbol después. Podamos frutales, olivos, almendros, setos y árboles de sombra, cada uno en su momento: los frutales y los olivos con el árbol parado, de diciembre a marzo, y los setos varias veces al año para que no se abran.
+
+          En los olivos aclaramos la copa para que entre la luz y el aire, quitamos los chupones y dejamos el árbol a una altura cómoda. En los frutales formamos la copa y quitamos la madera vieja para que den fruta buena y no solo hojas.
+
+          Para los árboles grandes o peligrosos trabajamos con cuerdas y, cuando hace falta, con plataforma elevadora, y nos llevamos todos los restos. Si un árbol está enfermo o hay que talarlo, te lo decimos claro y te proponemos qué plantar en su lugar.
+      - titulo: Césped natural y artificial
+        texto: "Tepe, siembra o césped artificial bien drenado, según el uso y el agua que tengas."
+        precio: "desde 9 €/m²"
+        imagen: /fotos/servicio-cesped.jpg
+        detalle: |
+          Antes de poner césped conviene pensar cuánto se va a pisar y cuánta agua se le puede dar, porque en el Bajo Aragón el verano es largo. Te aconsejamos la mezcla que mejor aguanta aquí o, si prefieres olvidarte del riego, un césped artificial de calidad.
+
+          Para el natural preparamos la tierra a fondo: quitamos piedras y raíces, nivelamos, añadimos tierra vegetal y abono de fondo y dejamos los aspersores colocados. Después ponemos el tepe, que se puede pisar en pocas semanas, o sembramos, que sale más barato y agarra muy bien en primavera y en otoño.
+
+          El artificial lo colocamos sobre una base compactada y drenante, con malla antihierbas y juntas bien pegadas, para que el agua de lluvia se vaya y no salgan bultos. También renovamos céspedes viejos con calvas, escarificando, resembrando y ajustando el riego.
+      - titulo: Riego automático
+        texto: "Goteo y aspersión con programador, para regar lo justo y a la hora buena."
+        precio: "desde 350 €"
+        imagen: /fotos/servicio-riego.jpg
+        detalle: |
+          Con un buen riego automático el jardín recibe el agua que necesita y tú te olvidas de la manguera. Separamos el riego por zonas: goteo para los arbustos, los árboles y los bancales de huerta, y aspersión o difusores para el césped, cada zona con su tiempo y su horario.
+
+          Instalamos programadores sencillos de manejar, también con sensor de lluvia o con control desde el móvil si lo quieres. Regamos de madrugada, cuando el agua se aprovecha más y no se evapora con el sol.
+
+          Si ya tienes riego y no funciona bien, lo revisamos: cambiamos goteros atascados, aspersores rotos y electroválvulas, buscamos fugas y lo dejamos ajustado. En otoño vaciamos las tuberías que pueden helarse y en primavera lo ponemos en marcha otra vez.
+      - titulo: Desbroces de fincas y solares
+        texto: "Limpieza de parcelas, márgenes y solares, con retirada de los restos."
+        precio: "Consultar"
+      - titulo: Huertos
+        texto: "Bancales elevados, tierra buena y goteo para que la huerta dé poco trabajo."
+        precio: "desde 450 €"
+    nota: "Precios orientativos con IVA. El precio cerrado te lo damos después de ver el jardín."
+    cta: { texto: Pide presupuesto, url: "/#presupuesto" }
+
+  trabajos:
+    activa: true
+    antetitulo: Jardines hechos
+    titulo: Así quedan los jardines que hacemos
+    texto: "Algunos trabajos de los últimos años, en Alcañiz y los pueblos de alrededor."
+    trabajos:   # `lugar` con el nombre del pueblo: el jardín sale también en la página de esa zona
+      - titulo: Jardín seco con olivos
+        texto: "Grava, tres olivos, lavanda y gramíneas que casi no piden agua. Bordes de acero corten y goteo en cada planta."
+        lugar: Alcañiz
+        superficie: "420 m²"
+        imagen: /fotos/trabajo-jardin-seco.jpg
+      - titulo: Zona verde de una comunidad
+        texto: "Césped renovado, setos de laurel recortados y riego por aspersión con programador por zonas."
+        lugar: Caspe
+        superficie: "1.200 m²"
+        imagen: /fotos/trabajo-comunidad.jpg
+      - titulo: Huerto en bancales
+        texto: "Seis bancales de pino tratado, tierra de cultivo y goteo. Una huerta que se riega sola."
+        lugar: Calanda
+        superficie: "60 m²"
+        imagen: /fotos/trabajo-huerto.jpg
+
+  presupuesto:
+    activa: true
+    antetitulo: Presupuesto sin compromiso
+    titulo: Vamos a ver tu jardín y te damos el precio por escrito
+    texto: "Llámanos o escríbenos. En dos o tres días pasamos a verlo y en una semana tienes el presupuesto."
+    items:
+      - { titulo: Nos cuentas qué necesitas, texto: "Por teléfono, por WhatsApp o con el formulario. Si puedes, mándanos una foto." }
+      - { titulo: Vamos a verlo, texto: "Medimos y miramos la tierra, el sol y el agua que hay." }
+      - { titulo: Te damos el precio, texto: "Por escrito y cerrado, con la fecha en que empezamos." }
+    cta: { texto: Pedir visita, url: "/#contacto" }
+    cta_secundario: { texto: Llamar al 978 000 000, url: "tel:+34978000000" }
+    nota: "La visita y el presupuesto no cuestan nada."
+
+  vivero:
+    activa: true
+    antetitulo: El vivero
+    titulo: Qué hay ahora en el vivero
+    texto: "Planta de temporada, árboles, frutales y plantel de huerta. Te decimos qué plantar y cómo cuidarlo."
+    imagen: /fotos/vivero.jpg
+    pie_foto: El vivero, en el Camino de la Estación. Abierto de lunes a sábado.
+    plantas:   # `categoria` agrupa la lista; precio siempre entre comillas
+      - { nombre: Pensamientos y violas, texto: "Bandeja de seis, para alegrar el invierno", precio: "3,50 €", categoria: Planta de temporada }
+      - { nombre: Ciclámenes, texto: "Maceta de 12 cm, para dentro o para un balcón resguardado", precio: "2,90 €", categoria: Planta de temporada }
+      - { nombre: Crisantemos, texto: "Maceta de 14 cm, en varios colores", precio: "4,50 €", categoria: Planta de temporada }
+      - { nombre: Olivo arbequino, texto: "En contenedor de 25 litros", precio: "45 €", categoria: Árboles y frutales }
+      - { nombre: Almendro, texto: "A raíz desnuda, de noviembre a febrero", precio: "14 €", categoria: Árboles y frutales }
+      - { nombre: Melocotonero, texto: "En maceta, variedad tardía de la zona", precio: "18 €", categoria: Árboles y frutales }
+      - { nombre: Plantel de ajos y cebollas, texto: "Manojo para un bancal", precio: "2 €", categoria: Huerta }
+      - { nombre: Plantel de lechugas y coles, texto: "Bandeja de doce", precio: "3 €", categoria: Huerta }
+      - { nombre: Sustrato universal, texto: "Saco de 50 litros", precio: "8,50 €", categoria: "Tierras, abonos y macetas" }
+      - { nombre: Estiércol de oveja, texto: "Saco de 25 kilos, bien hecho", precio: "6 €", categoria: "Tierras, abonos y macetas" }
+      - { nombre: Macetas de barro, texto: "De 12 a 60 cm", precio: "desde 2 €", categoria: "Tierras, abonos y macetas" }
+    nota: "Precios con IVA. La planta cambia con la temporada: pregunta antes de venir."
+    cta: { texto: Pregunta si la tenemos, url: "/#contacto" }
+
+  calendario:
+    activa: true
+    antetitulo: El año en el jardín
+    titulo: Qué toca hacer en cada época
+    texto: "En el Bajo Aragón el verano aprieta y las heladas llegan pronto. Así repartimos el trabajo."
+    tareas:   # `meses`: «noviembre a marzo», «marzo y octubre», «todo el año»…
+      - { titulo: Poda de frutales y olivos, meses: "Diciembre a marzo", texto: "Con el árbol parado y sin heladas fuertes." }
+      - { titulo: Plantar árboles y arbustos, meses: "Noviembre a marzo", texto: "La raíz agarra con las lluvias y llega fuerte al verano." }
+      - { titulo: Césped nuevo, meses: "Marzo a mayo y septiembre a octubre", texto: "Ni el frío ni el calor lo frenan." }
+      - { titulo: Plantel de huerta de verano, meses: "Abril a junio", texto: "Tomates, pimientos y calabacines, pasadas las heladas." }
+      - { titulo: Revisión del riego, meses: "Marzo y octubre", texto: "Antes del calor, y antes de las heladas para vaciar tuberías." }
+      - { titulo: Desbroces de fincas, meses: "Abril a junio", texto: "Antes de que la hierba se seque y haya riesgo de fuego." }
+
+  sobre:
+    activa: true
+    antetitulo: Quiénes somos
+    titulo: Una familia de jardineros en Alcañiz
+    desde: "1994"
+    declaracion: "Plantamos lo que aguanta aquí: olivo, almendro, lavanda y romero, con el agua justa."
+    texto: |
+      Pilar y Jesús abrieron el vivero en el Camino de la Estación y empezaron a hacer jardines para los vecinos. Hoy lo llevan con sus hijos y un equipo de cinco jardineros.
+
+      Seguimos criando buena parte de la planta que ponemos, así que sabemos cómo se porta con el cierzo, el sol de agosto y las heladas de enero.
+    imagen: /fotos/sobre.jpg
+    items:
+      - { titulo: Vivero propio, texto: "Lo que plantamos lo hemos criado aquí: ya conoce el clima." }
+      - { titulo: El agua justa, texto: "Goteo, programador y plantas que no piden más agua de la que hay." }
+      - { titulo: El mismo equipo, texto: "Quien te hace el jardín es quien luego lo cuida." }
+
+  zonas:
+    activa: true
+    antetitulo: Dónde trabajamos
+    titulo: Alcañiz y los pueblos de alrededor
+    texto: "Vamos a unos 40 kilómetros a la redonda. Si tu pueblo no está, pregúntanos."
+    titulo_pagina: "Jardinería en {zona}"
+    texto_pagina: "Diseño, mantenimiento, podas y riego en {zona}. Vamos a ver tu jardín y te damos el precio por escrito, sin compromiso."
+    items:   # las zonas con `texto` tienen su página en /zonas/<slug>/
+      - titulo: Alcañiz
+        texto: "Alcañiz es nuestra casa: aquí está el vivero, en el Camino de la Estación, y aquí hemos hecho la mayoría de nuestros jardines, desde patios del casco antiguo hasta chalets de las urbanizaciones de las afueras. Diseñamos jardines nuevos, cuidamos los de particulares y comunidades y podamos los olivos y frutales de las torres y huertos de la vega del Guadalope. Al estar tan cerca, podemos pasar a ver tu jardín casi en el día y atender una avería del riego sin esperas."
+      - titulo: Calanda
+        texto: "En Calanda trabajamos sobre todo en huertos y jardines de casas con terreno, muchos con frutales. Podamos melocotoneros, olivos y almendros en su época, montamos bancales con riego por goteo y hacemos el mantenimiento de jardines de segunda residencia, que en verano necesitan que alguien esté pendiente del riego. Pasamos por Calanda varias veces por semana, así que es fácil encajar una visita para ver tu jardín y darte el presupuesto."
+      - titulo: Caspe
+        texto: "En Caspe cuidamos zonas verdes de comunidades de vecinos y jardines de chalets cerca del embalse. El calor del verano aprieta aquí, así que ponemos especial cuidado en el riego: programadores por zonas, goteo en setos y arbustos y céspedes que aguantan. También hacemos desbroces de parcelas y solares antes del verano y renovamos jardines viejos para que pidan menos agua y menos trabajo."
+      - titulo: Andorra
+        texto: "En Andorra y los pueblos de la Sierra de Arcos hacemos jardines de casas y chalets pensados para inviernos fríos y veranos secos: arbustos que aguantan las heladas, céspedes resistentes y riego por goteo bien protegido. Podamos árboles grandes en calles y patios, limpiamos parcelas y nos encargamos del mantenimiento durante todo el año, con visitas cada semana o cada quince días según lo que necesite tu jardín."
+      - { titulo: Valdealgorfa }
+      - { titulo: Castelserás }
+      - { titulo: Alcorisa }
+      - { titulo: La Puebla de Híjar }
+
+  opiniones:
+    activa: true
+    antetitulo: Opiniones
+    titulo: Lo que dicen de nosotros
+    testimonios:
+      - { texto: "Nos hicieron el jardín de la casa con plantas que casi no hay que regar. Dos veranos después sigue precioso y la factura del agua ha bajado.", autor: Marta G., nota: Alcañiz }
+      - { texto: "Llevan el jardín de nuestra comunidad desde hace años. Puntuales, limpios y siempre avisan antes de venir.", autor: Comunidad Los Pinos, nota: Caspe }
+      - { texto: "Me podaron los olivos y los melocotoneros y me explicaron qué hacer el resto del año. Se nota que saben.", autor: Antonio L., nota: Calanda }
+
+  preguntas:
+    activa: true
+    antetitulo: Preguntas frecuentes
+    titulo: Lo que más nos preguntan
+    preguntas:
+      - { pregunta: "¿Cuánto cuesta el presupuesto?", respuesta: "Nada. Vamos a ver el jardín, te contamos qué haríamos y te mandamos el precio por escrito en una semana." }
+      - { pregunta: "¿Hacéis mantenimiento a comunidades de vecinos?", respuesta: "Sí. Cuidamos zonas verdes de comunidades con visitas cada semana o cada quince días, y pasamos el parte de lo que hemos hecho." }
+      - { pregunta: "¿Cuándo es mejor plantar un jardín nuevo?", respuesta: "En otoño y al final del invierno, de noviembre a marzo. La planta agarra con las lluvias y llega fuerte al verano." }
+      - { pregunta: "¿Os lleváis los restos de poda?", respuesta: "Sí, siempre. Los restos van a una planta de compostaje y el jardín queda limpio al terminar." }
+      - { pregunta: "¿Puedo comprar en el vivero aunque no me hagáis el jardín?", respuesta: "Claro. El vivero está abierto a todo el mundo y te aconsejamos qué planta va bien en tu casa y cómo cuidarla." }
+
+  contacto:
+    activa: true
+    antetitulo: Contacto
+    titulo: Cuéntanos qué jardín tienes
+    texto: "Te respondemos en el día. Si puedes, mándanos una foto por WhatsApp."

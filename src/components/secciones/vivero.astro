@@ -1,0 +1,63 @@
+---
+// «El vivero»: a la izquierda la foto vertical del vivero (fija al bajar en escritorio) con su pie en Newsreader; a la
+// derecha el titular y la planta de ahora agrupada por `categoria`: filas con filetes, el nombre en Vollkorn, la nota en
+// Newsreader y el precio a la derecha en cifras de caja alta. Debajo, el botón (`cta`; sin él, el WhatsApp) y `nota`.
+// Sin `imagen`, la lista ocupa todo el ancho en dos columnas.
+import { seccion, site, whatsapp, agrupar, fuera } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const c = site.contacto;
+const grupos = s ? agrupar(s.plantas, (p) => p.categoria) : [];
+const boton = s?.cta?.url
+  ? s.cta
+  : c.whatsapp
+    ? { texto: 'Pregunta si la tenemos', url: whatsapp(c.whatsapp, 'Hola, ¿tenéis en el vivero…?') }
+    : null;
+const pie = String(s?.pie_foto ?? '').trim();
+---
+
+{
+  s && (s.titulo || s.texto || s.imagen || s.plantas.length > 0) && (
+    <Banda id={Astro.props.id} color="papel">
+      <div class:list={['vivero', { 'vivero--con-foto': s.imagen }]}>
+        {s.imagen && (
+          <figure class="vivero-foto">
+            <div class="foto"><Imagen src={s.imagen} alt={altSeccion(s)} ancho={1050} alto={1400} /></div>
+            {pie && <figcaption class="pie-foto">{pie}</figcaption>}
+          </figure>
+        )}
+        <div class="vivero-lista">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+          {grupos.length > 0 && (
+            <div class="vivero-grupos">
+              {grupos.map((g) => (
+                <div class="vivero-grupo">
+                  {g.grupo && <h3>{g.grupo}</h3>}
+                  <ul>
+                    {g.items.map((p) => (
+                      <li class="planta">
+                        <p class="planta-nombre">{p.nombre}</p>
+                        {p.precio && <p class="planta-precio">{p.precio}</p>}
+                        {p.texto && <p class="pie-foto">{p.texto}</p>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+          {(boton || s.nota) && (
+            <div class="botones">
+              {boton && <a class="btn" href={boton.url} {...fuera(boton.url)}>{boton.texto}</a>}
+              {s.nota && <p class="menuda">{s.nota}</p>}
+            </div>
+          )}
+        </div>
+      </div>
+    </Banda>
+  )
+}

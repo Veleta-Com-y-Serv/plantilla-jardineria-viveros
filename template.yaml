@@ -1,0 +1,121 @@
+# Metadatos de la plantilla para el catálogo de NoExpertise.
+id: jardineria-viveros
+nombre: Jardinería y viveros
+descripcion: "Web de cuaderno de campo para jardineros y viveros: jardines hechos, servicios, planta de temporada y zonas."
+sectores:
+  - { id: jardineria, nombre: Jardinería y paisajismo }
+  - { id: vivero, nombre: Vivero y centro de jardinería }
+  - { id: jardinero, nombre: Jardinero autónomo }
+  - { id: mantenimiento-jardines, nombre: Mantenimiento de jardines }
+secciones:
+  - { id: hero, nombre: Portada }
+  - { id: servicios, nombre: Servicios }
+  - { id: trabajos, nombre: Jardines hechos }
+  - { id: presupuesto, nombre: Presupuesto }
+  - { id: vivero, nombre: El vivero }
+  - { id: calendario, nombre: El año en el jardín }
+  - { id: sobre, nombre: Quiénes somos }
+  - { id: zonas, nombre: Dónde trabajamos }
+  - { id: opiniones, nombre: Opiniones }
+  - { id: preguntas, nombre: Preguntas frecuentes }
+  - { id: contacto, nombre: Contacto }
+estilo: garden
+plan_minimo: gratis
+version: 1.0.0
+base: astrowind
+demo_url: https://demo-plantilla-jardineria-viveros.noexpertise.com
+activa: true
+orden: 830
+
+# Fichas por elemento y páginas por zona (docs/plantillas.md § Fichas por elemento y páginas por zona). Espejo en
+# src/data/fichas.ts: cada servicio con `detalle` tiene su página en /servicios/<slug>/ y cada zona con `texto`, en /zonas/<slug>/.
+fichas:
+  - { lista: servicios, campo: items, ruta: servicios, nombre: Servicio, tipo: Service }
+zonas:
+  ruta: zonas
+
+# Varias páginas (docs/plantillas.md § Varias páginas): reparto recomendado al activar «Varias páginas».
+# Inicio se queda con la portada y lo que no esté en ninguna página (aquí, el presupuesto y quiénes somos).
+paginas:
+  - { ruta: servicios, titulo: Servicios, secciones: "servicios" }
+  - { ruta: jardines-hechos, titulo: Jardines hechos, secciones: "trabajos; opiniones" }
+  - { ruta: el-vivero, titulo: El vivero, secciones: "vivero; calendario" }
+  - { ruta: contacto, titulo: Zonas y contacto, secciones: "zonas; preguntas; contacto" }
+
+# Asistente de puesta en marcha (NoExpertise): un paso por pantalla. Rutas del site sin índices;
+# tipos: texto y lista (la IA propone), datos, fotos, eleccion (colores y logo) y repaso.
+asistente:
+  - id: negocio
+    titulo: "Tu jardinería"
+    pregunta: "¿Cómo se llama tu empresa de jardinería o tu vivero y qué la hace especial?"
+    ayuda: "Por ejemplo: jardines que ahorran agua, vivero propio, mantenimiento de comunidades o podas de olivos y frutales, y en qué pueblo o comarca trabajas."
+    tipo: texto
+    campos: [nombre, eslogan, seo.titulo, seo.descripcion, secciones.hero.antetitulo, secciones.hero.titulo, secciones.hero.texto]
+  - id: contacto
+    titulo: "Cómo te encuentran"
+    pregunta: "¿Dónde estás y cómo te pueden llamar o escribir para pedir presupuesto?"
+    ayuda: "Solo lo que quieras que vean tus clientes. Si usas WhatsApp, ponlo: saldrá un botón para pedir visita. Si tienes vivero, pon su horario."
+    tipo: datos
+    campos: [contacto.telefono, contacto.whatsapp, contacto.email, contacto.direccion, contacto.horario, redes.instagram, redes.facebook]
+  - id: servicios
+    titulo: "Tus servicios"
+    pregunta: "¿Qué trabajos haces? Uno por línea, con el precio si quieres darlo."
+    ayuda: "Por ejemplo: «Mantenimiento de jardines, desde 60 € al mes», «Podas de olivos y frutales», «Riego automático», «Césped artificial», «Desbroces de fincas»."
+    tipo: lista
+    campos: [secciones.servicios.items]
+  - id: trabajos
+    titulo: "Jardines que has hecho"
+    pregunta: "Cuéntame dos o tres jardines que hayas hecho: qué hiciste y en qué pueblo."
+    ayuda: "Por ejemplo: «Jardín de grava con olivos y goteo en una casa de Calanda» o «Césped y setos de una comunidad en Caspe». Luego pones la foto de cada uno."
+    tipo: lista
+    campos: [secciones.trabajos.trabajos]
+  - id: presupuesto
+    titulo: "Cómo das presupuesto"
+    pregunta: "¿Cómo pide alguien un presupuesto o una visita? Qué pasos sigues y cuánto tardas."
+    ayuda: "Por ejemplo: me llaman o me mandan una foto por WhatsApp, voy a verlo en dos o tres días y en una semana tienen el precio por escrito. Si la visita es gratis, dilo."
+    tipo: texto
+    campos: [secciones.presupuesto.titulo, secciones.presupuesto.texto, secciones.presupuesto.items, secciones.presupuesto.nota]
+  - id: vivero
+    titulo: "Tu vivero"
+    pregunta: "Si tienes vivero o tienda, ¿qué planta y productos tienes ahora? Uno por línea, con el precio si quieres."
+    ayuda: "Puedes poner delante el grupo (Planta de temporada, Árboles y frutales, Huerta, Tierras y abonos). Por ejemplo: «Árboles y frutales, olivo arbequino en contenedor, 45 €». Si no tienes vivero, salta este paso y luego oculta el apartado."
+    tipo: lista
+    campos: [secciones.vivero.plantas]
+  - id: calendario
+    titulo: "El año en el jardín"
+    pregunta: "¿Qué trabajos haces en cada época del año? Uno por línea, con los meses."
+    ayuda: "Por ejemplo: «Poda de frutales, de diciembre a marzo», «Césped nuevo, de marzo a mayo y en septiembre», «Revisión del riego, en marzo y octubre»."
+    tipo: lista
+    campos: [secciones.calendario.tareas]
+  - id: sobre
+    titulo: "Quién está detrás"
+    pregunta: "¿Desde cuándo trabajas, quién forma el equipo y qué te diferencia?"
+    ayuda: "Por ejemplo: empecé en 2005 con mi padre, somos tres jardineros, criamos nuestra propia planta o trabajamos con plantas que aguantan la sequía."
+    tipo: texto
+    campos: [secciones.sobre.titulo, secciones.sobre.desde, secciones.sobre.declaracion, secciones.sobre.texto, secciones.sobre.items]
+  - id: zonas
+    titulo: "Dónde trabajas"
+    pregunta: "¿En qué pueblos, barrios o urbanizaciones trabajas? Uno por línea."
+    ayuda: "Empieza por el tuyo. Por ejemplo: «Alcañiz, Calanda, Caspe, Andorra». Luego, en Contenido, puedes escribir unas líneas de cada uno para que tenga su propia página."
+    tipo: lista
+    campos: [secciones.zonas.items]
+  - id: preguntas
+    titulo: "Preguntas frecuentes"
+    pregunta: "¿Qué te preguntan más los clientes? Escribe cada pregunta y lo que respondes."
+    ayuda: "Por ejemplo: si el presupuesto cuesta algo, cada cuánto vienes a hacer el mantenimiento, cuándo es mejor plantar o si te llevas los restos de poda."
+    tipo: lista
+    campos: [secciones.preguntas.preguntas]
+  - id: fotos
+    titulo: "Tus fotos"
+    pregunta: "Pon una foto de portada de un jardín que hayas hecho y, si quieres, las de tu vivero y tu equipo trabajando."
+    ayuda: "Sube las tuyas o elige una del banco. Quedan mejor las fotos con luz de día y el jardín entero. Las fotos de cada jardín y de cada servicio se ponen en Contenido."
+    tipo: fotos
+    campos: [secciones.hero.imagen, secciones.vivero.imagen, secciones.sobre.imagen]
+  - id: aspecto
+    titulo: "Colores y logo"
+    pregunta: "Elige los colores de tu web y, si tienes, tu logo."
+    tipo: eleccion
+    campos: [colores.primario, colores.acento, logo]
+  - id: repaso
+    titulo: "Repaso"
+    tipo: repaso

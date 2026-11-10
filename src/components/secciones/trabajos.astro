@@ -1,0 +1,45 @@
+---
+// «Jardines hechos» (escaparate): banda clara; el primer jardín a todo el ancho (21:9) y los demás de dos en dos
+// (7 y 5 columnas, y al revés). Debajo de cada foto, la etiqueta del jardín: el título en Vollkorn, su línea y, en
+// Newsreader y una por línea, `lugar` y `superficie`. Si la última se queda sola, va a todo el ancho.
+import { seccion, fuera } from '../../data/site';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+---
+
+{
+  s && (s.titulo || s.texto || s.trabajos.length > 0) && (
+    <Banda id={Astro.props.id} color="clara">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} cabeza />
+      {s.trabajos.length > 0 && (
+        <div class="jardines">
+          {s.trabajos.map((j, i) => (
+            <figure class="jardin">
+              {j.imagen && (
+                <div class="foto">
+                  <Imagen src={j.imagen} alt={j.titulo || `${s.titulo}, foto ${i + 1}`} ancho={i === 0 ? 1440 : 1365} alto={i === 0 ? 810 : 1024} />
+                </div>
+              )}
+              {(j.titulo || j.texto || j.lugar || j.superficie) && (
+                <figcaption>
+                  {j.titulo && <h3>{j.titulo}</h3>}
+                  {j.texto ? <p class="jardin-texto">{j.texto}</p> : <span />}
+                  {(j.lugar || j.superficie) && (
+                    <p class="jardin-datos pie-foto">
+                      {j.lugar && <span>{j.lugar}</span>}
+                      {j.superficie && <span class="num">{j.superficie}</span>}
+                    </p>
+                  )}
+                </figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      )}
+      {s.cta && <div class="botones"><a class="btn-sec" href={s.cta.url} {...fuera(s.cta.url)}>{s.cta.texto}</a></div>}
+    </Banda>
+  )
+}

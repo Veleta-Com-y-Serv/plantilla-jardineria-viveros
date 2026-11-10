@@ -1,0 +1,43 @@
+---
+// «Servicios»: cabeza con filete y las filas de servicios con filetes finos: el nombre en Vollkorn (con `detalle`,
+// enlaza a su página /servicios/<slug>/), su línea y el precio a la derecha en cifras de caja alta. Sin precio, no hay
+// precio. Debajo, `nota` en letra menuda y el botón (`cta`). Sin fotos: las fotos de cada servicio salen en su página.
+import { seccion, fuera } from '../../data/site';
+import { enlaceDe } from '../../lib/paginas';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const t = (v: unknown) => (v == null ? '' : String(v).trim());
+---
+
+{
+  s && (s.titulo || s.texto || s.items.length > 0) && (
+    <Banda id={Astro.props.id} color="papel">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} cabeza />
+      {s.items.length > 0 && (
+        <ul class="filas-servicio">
+          {s.items.map((it) => {
+            const url = enlaceDe(it);
+            return (
+              <li class="servicio">
+                <h3>{url ? <a href={url}>{it.titulo}</a> : it.titulo}</h3>
+                <div>
+                  {it.texto && <p class="servicio-texto">{it.texto}</p>}
+                  {url && <a class="servicio-mas enlace" href={url} aria-label={`Más sobre ${it.titulo}`}>Cómo lo hacemos</a>}
+                </div>
+                {t(it.precio) && <p class="servicio-precio">{t(it.precio)}</p>}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      {(s.nota || s.cta) && (
+        <div class="servicios-pie">
+          {s.nota ? <p class="menuda">{s.nota}</p> : <span />}
+          {s.cta && <div class="botones"><a class="btn" href={s.cta.url} {...fuera(s.cta.url)}>{s.cta.texto}</a></div>}
+        </div>
+      )}
+    </Banda>
+  )
+}

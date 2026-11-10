@@ -1,0 +1,32 @@
+---
+// «Preguntas frecuentes»: banda clara; titular fijo a la izquierda en escritorio y las preguntas en filas con filetes
+// (details/summary, sin JavaScript). Es lo que citan los buscadores y los asistentes de IA (JSON-LD FAQPage en Base).
+import { seccion } from '../../data/site';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+---
+
+{
+  s && (s.titulo || s.preguntas.length > 0) && (
+    <Banda id={Astro.props.id} color="clara">
+      <div class="preguntas-rejilla">
+        <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+        {s.preguntas.length > 0 && (
+          <div>
+            {s.preguntas.map((p) => (
+              <details class="faq">
+                <summary>
+                  <span>{p.pregunta}</span>
+                  <span class="faq-signo" aria-hidden="true" />
+                </summary>
+                {p.respuesta && <p class="faq-respuesta">{p.respuesta}</p>}
+              </details>
+            ))}
+          </div>
+        )}
+      </div>
+    </Banda>
+  )
+}

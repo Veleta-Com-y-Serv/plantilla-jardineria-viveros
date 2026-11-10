@@ -1,0 +1,186 @@
+---
+// Página de una zona con `texto` (src/lib/paginas.ts, sección `zonas`): /zonas/<slug>/.
+// Diseño «huerto»: portada partida (migas, «Jardinería en <zona>» con `titulo_pagina`, la entrada `texto_pagina` y los
+// botones; a la derecha la foto de la zona o, si no tiene, la de la sección o la de la portada); el texto propio de la
+// zona; los servicios en filas (los que tienen ficha, enlazados); los jardines hechos cuyo `lugar` nombra la zona; hasta
+// tres opiniones (primero las que la nombran); la banda de tinta para pedir presupuesto y las otras zonas con página.
+import Base from '../../layouts/Base.astro';
+import Imagen from '../../components/ui/Imagen.astro';
+import { seccion, site, tel, whatsapp } from '../../data/site';
+import { enlaceDe, introZona, resumen, tituloZona, trabajosEn, zonasConPagina } from '../../lib/paginas';
+import type { Zona } from '../../lib/paginas';
+import { jsonLdMigas, jsonLdZona, urlBase } from '../../lib/seo';
+import { enlace, rutaDeSeccion } from '../../lib/multipagina';
+
+export function getStaticPaths() {
+  return zonasConPagina().map((z) => ({ params: { slug: z.slug }, props: { z } }));
+}
+
+interface Props { z: Zona }
+const { z } = Astro.props;
+const base = urlBase(Astro.site);
+const titulo = tituloZona(z);
+const intro = introZona(z);
+const nombreSeccion = String(z.seccion.titulo || z.seccion.antetitulo || 'Zonas').trim();
+const migas = [
+  { nombre: 'Inicio', ruta: '/' },
+  { nombre: nombreSeccion, ruta: rutaDeSeccion(z.idSeccion) },
+  { nombre: z.nombre, ruta: z.url },
+];
+const c = site.contacto;
+const hero = seccion('hero');
+const foto = z.imagen || String(z.seccion.imagen || '') || String(hero?.imagen || '');
+const servicios = seccion('servicios');
+const listaServicios = servicios ? servicios.items.filter((it) => it?.titulo) : [];
+const jardines = trabajosEn(z.nombre).slice(0, 4);
+const opinionesSec = seccion('opiniones');
+const todas = opinionesSec ? opinionesSec.testimonios.filter((t) => t?.texto) : [];
+const nombra = (t: { texto: string; nota?: string }) => `${t.texto} ${t.nota ?? ''}`.toLowerCase().includes(z.nombre.toLowerCase());
+const opiniones = [...todas.filter(nombra), ...todas.filter((t) => !nombra(t))].slice(0, 3);
+const wa = whatsapp(c.whatsapp, `Hola, quiero presupuesto para un jardín en ${z.nombre}`);
+const pedir = wa
+  ? { texto: 'Pedir visita por WhatsApp', url: wa, fuera: true }
+  : seccion('presupuesto')
+    ? { texto: 'Pedir presupuesto', url: enlace('/#presupuesto'), fuera: false }
+    : { texto: 'Escríbenos', url: enlace('/#contacto'), fuera: false };
+const otras = zonasConPagina().filter((x) => x !== z);
+const t = (v: unknown) => (v == null ? '' : String(v).trim());
+---
+
+<Base titulo={titulo} descripcion={resumen(z.texto[0] ?? intro)} imagen={foto} ld={[jsonLdMigas(base, migas), jsonLdZona(base, z)]}>
+  <section class:list={['portada', 'ficha-portada', { 'portada--con-foto': foto }]}>
+    <div class="portada-texto">
+      <nav aria-label="Migas de pan" class="migas menuda">
+        <ol>
+          {migas.map((m, i) => (
+            <li>{i < migas.length - 1 ? <a href={m.ruta}>{m.nombre}</a> : <span aria-current="page">{m.nombre}</span>}</li>
+          ))}
+        </ol>
+      </nav>
+      <h1 class="portada-titulo">{titulo}</h1>
+      {intro && <p class="portada-parrafo">{intro}</p>}
+      <div class="botones">
+        <a class="btn" href={pedir.url} {...(pedir.fuera && { rel: 'noopener', target: '_blank' })}>{pedir.texto}</a>
+        {c.telefono && <a class="btn-sec" href={tel(c.telefono)}>Llamar al {c.telefono}</a>}
+      </div>
+    </div>
+    {foto && (
+      <figure class="portada-foto">
+        <div class="foto"><Imagen src={foto} alt={titulo} ancho={1400} alto={1050} prioridad /></div>
+      </figure>
+    )}
+  </section>
+
+  <section class="banda banda--clara">
+    <div class="contenedor partido">
+      <div class="titular">
+        <h2 class="titulo-seccion">{z.nombre}</h2>
+      </div>
+      <div class="zona-texto">
+        {z.texto.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  {listaServicios.length > 0 && (
+    <section class="banda banda--papel">
+      <div class="contenedor">
+        <div class="cabeza">
+          <h2 class="titulo-seccion">Qué hacemos en {z.nombre}</h2>
+        </div>
+        <ul class="filas-servicio">
+          {listaServicios.map((it) => (
+            <li class="servicio">
+              <h3>{enlaceDe(it) ? <a href={enlaceDe(it)}>{it.titulo}</a> : it.titulo}</h3>
+              <div>{it.texto && <p class="servicio-texto">{it.texto}</p>}</div>
+              {t(it.precio) && <p class="servicio-precio">{t(it.precio)}</p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {jardines.length > 0 && (
+    <section class="banda banda--clara">
+      <div class="contenedor">
+        <div class="cabeza">
+          <h2 class="titulo-seccion">Jardines en {z.nombre}</h2>
+        </div>
+        <div class="zona-jardines">
+          {jardines.map((j) => (
+            <figure class="zona-jardin">
+              {t(j.imagen) && <div class="foto"><Imagen src={t(j.imagen)} alt={t(j.titulo) || titulo} ancho={1365} alto={1024} /></div>}
+              <figcaption>
+                {t(j.titulo) && <h3>{t(j.titulo)}</h3>}
+                {t(j.texto) && <p class="jardin-texto">{t(j.texto)}</p>}
+                {(t(j.lugar) || t(j.superficie)) && (
+                  <p class="jardin-datos pie-foto">
+                    {t(j.lugar) && <span>{t(j.lugar)}</span>}
+                    {t(j.superficie) && <span class="num">{t(j.superficie)}</span>}
+                  </p>
+                )}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {opiniones.length > 0 && (
+    <section class="banda banda--papel">
+      <div class="contenedor">
+        <div class="cabeza">
+          <h2 class="titulo-seccion">{opinionesSec?.titulo || 'Opiniones'}</h2>
+        </div>
+        <ul class="opiniones-resto">
+          {opiniones.map((o) => (
+            <li>
+              <p class="opinion-texto">«{o.texto}»</p>
+              <p class="opinion-autor menuda">{[o.autor, o.nota].filter(Boolean).join(', ')}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="banda banda--tinta">
+    <div class="contenedor presupuesto">
+      <div>
+        <h2 class="frase">¿Tienes un jardín en {z.nombre}?</h2>
+        <p class="entrada">Vamos a verlo, te contamos qué haríamos y te damos el precio por escrito.</p>
+      </div>
+      <div class="botones zona-botones">
+        <a class="btn" href={pedir.url} {...(pedir.fuera && { rel: 'noopener', target: '_blank' })}>{pedir.texto}</a>
+        {c.telefono && <a class="btn-sec" href={tel(c.telefono)}>Llamar al {c.telefono}</a>}
+      </div>
+    </div>
+  </section>
+
+  {otras.length > 0 && (
+    <section class="banda banda--papel">
+      <div class="contenedor partido">
+        <div class="titular">
+          <h2 class="titulo-seccion">También trabajamos en</h2>
+        </div>
+        <ul class="pueblos">
+          {otras.map((o) => <li><a class="pueblo-nombre" href={o.url}>{o.nombre}</a></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .ficha-portada .portada-texto { padding-top: 1.5rem; }
+  .zona-texto { display: grid; gap: 1rem; max-width: 44rem; font-size: 1.1rem; line-height: 1.7; }
+  .zona-texto p:first-child { font-size: clamp(1.15rem, 1.05rem + .4vw, 1.3rem); line-height: 1.6; color: var(--tinta); }
+  .zona-jardines { display: grid; gap: 3rem 2rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 26rem), 1fr)); }
+  .zona-jardin { margin: 0; min-width: 0; }
+  .zona-jardin figcaption { display: grid; gap: .35rem; margin-top: 1.1rem; }
+  .zona-jardin h3 { font-size: clamp(1.35rem, 1.1rem + .8vw, 1.75rem); line-height: 1.12; }
+  .zona-jardines .foto { aspect-ratio: 4 / 3; }
+  @media (min-width: 60rem) { .zona-botones { margin-top: 0; align-self: end; justify-content: flex-end; } }
+</style>

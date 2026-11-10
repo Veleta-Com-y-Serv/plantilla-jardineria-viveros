@@ -1,0 +1,35 @@
+---
+// «Opiniones»: la primera como frase grande en Vollkorn con su autor en letra menuda; las demás en columnas con un
+// filete encima. Solo las que ponga el cliente (la plataforma no las inventa: la sección sale desmarcada).
+import { seccion } from '../../data/site';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const [primera, ...resto] = s?.testimonios ?? [];
+const autor = (t: { autor: string; nota?: string }) => [t.autor, t.nota].filter(Boolean).join(', ');
+---
+
+{
+  s && (s.titulo || primera) && (
+    <Banda id={Astro.props.id} color="papel">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} cabeza />
+      {primera && (
+        <figure class="cita">
+          <blockquote>«{primera.texto}»</blockquote>
+          {autor(primera) && <figcaption class="cita-autor menuda">{autor(primera)}</figcaption>}
+        </figure>
+      )}
+      {resto.length > 0 && (
+        <ul class="opiniones-resto">
+          {resto.map((t) => (
+            <li>
+              <p class="opinion-texto">«{t.texto}»</p>
+              {autor(t) && <p class="opinion-autor menuda">{autor(t)}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </Banda>
+  )
+}

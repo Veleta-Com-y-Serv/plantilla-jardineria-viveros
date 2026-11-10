@@ -1,0 +1,63 @@
+---
+// «El año en el jardín» (firma del tema Garden): banda de musgo con una tabla de filetes. Cada fila es una tarea
+// (`tareas`: titulo, meses, texto) y los doce meses van en columnas; los meses de `meses` («noviembre a febrero»,
+// «marzo; abril; octubre», «todo el año») se pintan con una barra verde hoja. El mes en curso se marca con un script
+// pequeño (sin él, no se marca nada). En el móvil cada tarea es un bloque con su tira de doce meses.
+import { seccion, MESES, mesesDe } from '../../data/site';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const filas = (s?.tareas ?? []).map((t) => {
+  const m = new Set(mesesDe(t.meses));
+  return { ...t, celdas: MESES.map((_, i) => ({ si: m.has(i), ini: m.has(i) && !m.has(i - 1), fin: m.has(i) && !m.has(i + 1) })) };
+});
+---
+
+{
+  s && (s.titulo || filas.length > 0) && (
+    <Banda id={Astro.props.id} color="musgo">
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} cabeza />
+      {filas.length > 0 && (
+        <table class="calendario" data-calendario>
+          <caption class="sr-only">{s.titulo || 'El año en el jardín'}: qué se hace cada mes</caption>
+          <thead>
+            <tr>
+              <th scope="col">Tarea</th>
+              {MESES.map((m) => <th scope="col" abbr={m}><span>{m.slice(0, 3)}</span></th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {filas.map((f) => (
+              <tr>
+                <th scope="row">
+                  <span class="tarea-titulo">{f.titulo}</span>
+                  {f.meses && <span class="tarea-meses pie-foto">{f.meses}</span>}
+                  {f.texto && <span class="tarea-texto">{f.texto}</span>}
+                </th>
+                {f.celdas.map((c, i) => (
+                  <td data-mes={MESES[i].charAt(0).toUpperCase()} class:list={{ si: c.si, ini: c.ini, fin: c.fin }}>
+                    <span class="sr-only">{MESES[i]}: {c.si ? 'sí' : 'no'}</span>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </Banda>
+  )
+}
+<script is:inline>
+  (function () {
+    var t = document.querySelector('[data-calendario]');
+    if (!t) return;
+    var m = new Date().getMonth();
+    var th = t.querySelectorAll('thead th')[m + 1];
+    if (th) th.classList.add('es-ahora');
+    t.querySelectorAll('tbody tr').forEach(function (tr) {
+      var td = tr.querySelectorAll('td')[m];
+      if (td) td.classList.add('es-ahora');
+    });
+  })();
+</script>

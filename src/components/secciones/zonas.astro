@@ -1,0 +1,33 @@
+---
+// «Dónde trabajamos»: banda clara partida: a la izquierda el titular con filete, el texto y el botón (`cta`); a la
+// derecha los pueblos (`items`, titulo = localidad) como índice de filas con filetes en Vollkorn. Las zonas con `texto`
+// tienen página propia (/zonas/<slug>/, src/lib/paginas.ts): su nombre enlaza a ella.
+import { seccion, fuera } from '../../data/site';
+import { enlaceDe } from '../../lib/paginas';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+---
+
+{
+  s && (s.titulo || s.texto || s.items.length > 0) && (
+    <Banda id={Astro.props.id} color="clara">
+      <div class="partido">
+        <div>
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+          {s.cta && <div class="botones"><a class="btn-sec" href={s.cta.url} {...fuera(s.cta.url)}>{s.cta.texto}</a></div>}
+        </div>
+        {s.items.length > 0 && (
+          <ul class="pueblos">
+            {s.items.map((z) => (
+              <li>
+                {enlaceDe(z) ? <a class="pueblo-nombre" href={enlaceDe(z)}>{z.titulo}</a> : <span class="pueblo-nombre">{z.titulo}</span>}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </Banda>
+  )
+}

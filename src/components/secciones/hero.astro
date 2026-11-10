@@ -1,0 +1,48 @@
+---
+// Portada «Stage»: a la izquierda, antetítulo en letra menuda, titular en Vollkorn 600, una frase y los dos botones
+// (píldora verde hoja + píldora de filete); debajo, los `items` (solo `titulo`) como datos cortos separados por filetes.
+// A la derecha, la foto (`imagen`) de un jardín hecho, en siete columnas hasta el borde de la ventana, con `pie_foto`
+// debajo en Newsreader (como la etiqueta de un vivero). En móvil la foto va arriba. Sin `imagen`, la portada es solo texto.
+// Sin `cta`, el primer botón llama; sin `cta_secundario`, lleva al mapa.
+import { seccion, site, tel, mapa, fuera } from '../../data/site';
+import { altHero } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const c = site.contacto;
+const principal = s?.cta?.url ? s.cta : c.telefono ? { texto: `Llamar al ${c.telefono}`, url: tel(c.telefono) } : null;
+const secundario = s?.cta_secundario?.url ? s.cta_secundario : c.direccion ? { texto: 'Cómo llegar', url: mapa(c.direccion) } : null;
+const datos = (s?.items ?? []).map((it) => String(it?.titulo ?? '').trim()).filter(Boolean);
+---
+
+{
+  s && (
+    <section id={id} class:list={['portada', { 'portada--con-foto': s.imagen }]}>
+      <div class="portada-texto">
+        {s.antetitulo && <p class="antetitulo">{s.antetitulo}</p>}
+        <h1 class="portada-titulo">{s.titulo || site.nombre}</h1>
+        {s.texto && <p class="portada-parrafo">{s.texto}</p>}
+        {(principal || secundario) && (
+          <div class="botones">
+            {principal && <a class="btn" href={principal.url} {...fuera(principal.url)}>{principal.texto}</a>}
+            {secundario && <a class="btn-sec" href={secundario.url} {...fuera(secundario.url)}>{secundario.texto}</a>}
+          </div>
+        )}
+        {datos.length > 0 && (
+          <ul class="portada-datos menuda">
+            {datos.map((d) => <li>{d}</li>)}
+          </ul>
+        )}
+      </div>
+      {s.imagen && (
+        <figure class="portada-foto">
+          <div class="foto">
+            <Imagen src={s.imagen} alt={altHero()} ancho={1400} alto={1400} prioridad={primera} />
+          </div>
+          {s.pie_foto && <figcaption class="pie-foto">{s.pie_foto}</figcaption>}
+        </figure>
+      )}
+    </section>
+  )
+}
